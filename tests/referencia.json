@@ -1,0 +1,60 @@
+{
+  "passarela": {
+    "terminais": [
+      739,
+      981,
+      777,
+      745,
+      1271,
+      766,
+      2196,
+      3796,
+      701,
+      156,
+      3948
+    ],
+    "soma_das_ligacoes": 3909.9705400914427
+  },
+  "pares": [
+    {
+      "origem": 739,
+      "destino": 283,
+      "distancia": 1107.3380071233105,
+      "distancia_sem_escadas": 1107.3380071233105
+    },
+    {
+      "origem": 894,
+      "destino": 4016,
+      "distancia": 700.6365985086447,
+      "distancia_sem_escadas": 700.6365985086447
+    },
+    {
+      "origem": 3735,
+      "destino": 337,
+      "distancia": 860.2871462893934,
+      "distancia_sem_escadas": 860.2871462893934
+    },
+    {
+      "origem": 787,
+      "destino": 2781,
+      "distancia": 856.2255867149586,
+      "distancia_sem_escadas": null
+    },
+    {
+      "origem": 896,
+      "destino": 493,
+      "distancia": 815.1655869420059,
+      "distancia_sem_escadas": 815.1655869420059
+    },
+    {
+      "origem": 154,
+      "destino": 2782,
+      "distancia": 902.7365589012434,
+      "distancia_sem_escadas": 902.7365589012434
+    }
+  ],
+  "agm": {
+    "arestas": 4333,
+    "peso": 64485.13367830251
+  }
+}

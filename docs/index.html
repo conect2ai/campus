@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Campus da UFRN em camadas · DCA3702</title>
+  <meta name="description" content="Mapa 3D interativo do campus da UFRN em camadas, com Dijkstra, A* e Kruskal executados no navegador.">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="css/estilo.css">
+  <script type="importmap">
+    { "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/addons/" } }
+  </script>
+</head>
+<body>
+  <div id="cena" aria-label="Mapa 3D do campus"></div>
+  <div id="rotulos" aria-hidden="true"></div>
+
+  <button id="abrir-painel" type="button" aria-controls="painel" aria-expanded="true">Painel</button>
+
+  <aside id="painel">
+    <header>
+      <p class="sobretitulo">DCA3702 · Projeto final · repositório modelo</p>
+      <h1>Campus da UFRN em camadas</h1>
+      <p class="resumo">Separe as camadas do mapa, clique em dois prédios para traçar o menor caminho e descubra a menor passarela coberta que liga um conjunto de prédios.</p>
+    </header>
+
+    <section>
+      <h2>Camadas</h2>
+      <ul id="lista-camadas" class="camadas"></ul>
+      <label class="controle" for="separar">
+        <span>Separar camadas</span>
+        <input id="separar" type="range" min="0" max="100" value="0">
+      </label>
+      <label class="opcao"><input id="mostrar-placas" type="checkbox" checked> Mostrar a placa de cada camada</label>
+      <div class="linha-botoes">
+        <button id="vista-topo" type="button">Vista de cima</button>
+        <button id="vista-3d" type="button">Vista inclinada</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Menor caminho</h2>
+      <p id="instrucao" class="instrucao">Clique em um prédio para definir a origem.</p>
+      <dl class="pontos">
+        <div><dt><span class="marca origem"></span>Origem</dt><dd id="nome-origem">não definida</dd></div>
+        <div><dt><span class="marca destino"></span>Destino</dt><dd id="nome-destino">não definido</dd></div>
+      </dl>
+      <label class="opcao"><input id="evitar-escadas" type="checkbox"> Evitar escadas</label>
+      <table id="tabela-rotas" class="resultado" hidden>
+        <thead><tr><th>Algoritmo</th><th>Distância</th><th>Nós visitados</th></tr></thead>
+        <tbody>
+          <tr><td><label><input type="radio" name="explorados" value="dijkstra" checked> Dijkstra</label></td><td id="d-dist"></td><td id="d-vis"></td></tr>
+          <tr><td><label><input type="radio" name="explorados" value="aestrela"> A*</label></td><td id="a-dist"></td><td id="a-vis"></td></tr>
+        </tbody>
+      </table>
+      <p id="nota-rotas" class="nota" hidden><span class="traco rota"></span> Caminho mínimo. Os pontos mostram os nós que o algoritmo selecionado visitou até chegar ao destino.</p>
+      <div class="linha-botoes">
+        <button id="limpar-rota" type="button">Limpar rota</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Passarela coberta</h2>
+      <p class="instrucao">Qual é o menor comprimento de passarela coberta que liga os prédios escolhidos? Dijkstra mede a distância a pé entre cada par e Kruskal escolhe as ligações.</p>
+      <div class="linha-botoes">
+        <button id="marcar-predios" type="button" aria-pressed="false">Marcar prédios no mapa</button>
+        <button id="predios-de-aula" type="button">Usar prédios de aula</button>
+      </div>
+      <p id="contagem-marcados" class="nota">Nenhum prédio marcado.</p>
+      <div class="linha-botoes">
+        <button id="calcular-passarela" type="button" class="primario" disabled>Calcular passarela</button>
+        <button id="limpar-passarela" type="button">Limpar</button>
+      </div>
+      <dl id="resultado-passarela" class="metricas" hidden>
+        <div><dt>Ligações examinadas</dt><dd id="p-exam"></dd></div>
+        <div><dt>Aceitas</dt><dd id="p-aceitas"></dd></div>
+        <div><dt>Descartadas por ciclo</dt><dd id="p-desc"></dd></div>
+        <div><dt>Soma das ligações</dt><dd id="p-soma"></dd></div>
+        <div><dt><span class="traco passarela"></span>Passarela a construir</dt><dd id="p-coberto"></dd></div>
+      </dl>
+      <p id="nota-passarela" class="nota" hidden>A passarela a construir é menor que a soma das ligações quando duas ligações usam o mesmo trecho de calçada, que só precisa ser coberto uma vez.</p>
+      <div id="passos-passarela" class="passos" hidden>
+        <table class="resultado">
+          <thead><tr><th>Ligação examinada</th><th>Distância</th><th>Decisão</th></tr></thead>
+          <tbody id="linhas-passarela"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="secao-selecao" hidden>
+      <h2>Prédio selecionado</h2>
+      <div id="selecao"></div>
+    </section>
+
+    <footer>
+      <p>Dados do mapa <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© colaboradores do OpenStreetMap</a>. Os prédios sem altura mapeada aparecem com altura padrão.</p>
+      <p><a id="link-repo" href="https://github.com/" target="_blank" rel="noopener">Código e dados no GitHub</a></p>
+    </footer>
+  </aside>
+
+  <div id="carregando">Carregando o mapa…</div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

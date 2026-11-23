@@ -1,0 +1,10 @@
+{
+  "name": "modelo-projeto-final-dca3702",
+  "private": true,
+  "type": "module",
+  "description": "Repositório modelo do projeto final de DCA3702 (UFRN)",
+  "scripts": {
+    "test": "node --test tests/algoritmos.test.mjs",
+    "servir": "python3 -m http.server 8000 --directory docs"
+  }
+}
